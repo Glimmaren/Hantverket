@@ -1,0 +1,30 @@
+version: '3.4'
+
+networks:
+  projectandreportbackend:
+
+services:
+  hantverketprojectreportsDB:
+    container_name: chantverketprojectreports-db
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+        - 8101:1433
+    environment:
+        - ACCEPT_EULA=Y
+        - SA_PASSWORD=password@1234#
+    networks:
+        - projectandreportbackend
+
+  hantverketprojectreports:
+    image: ${DOCKER_REGISTRY-}hantverketprojectreports
+    ports:
+        - 8102:80
+    build:
+      context: .
+      dockerfile: HantverketProjectReports/Dockerfile
+    environment:
+        - DB_HOST=hantverketprojectreportsDB
+        - DB_NAME=hantverketprojectreports
+        - DB_SA_PASSWORD=password@1234#
+    networks:
+        - projectandreportbackend
