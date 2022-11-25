@@ -30,9 +30,9 @@ namespace HantverketProjectReports.Repositories
             }
         }
 
-        public async Task<IList<Project>> GetAllProjectsAsync()
+        public async Task<IList<Project>> GetAllProjectsByComapnyIdAsync(long companyid)
         {
-            return await _context.Projects.ToListAsync();
+            return await _context.Projects.Where(c => c.CompanyId == companyid).ToListAsync();
         }
 
         public async Task<Project> GetProjectByIdAsync(long id)
@@ -75,5 +75,6 @@ namespace HantverketProjectReports.Repositories
         {
             throw new NotImplementedException();
         }
+
     }
 }

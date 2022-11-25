@@ -30,10 +30,10 @@ namespace HantverketProjectReports.Controllers
             return BadRequest("Could not add company category");
         }
 
-        [HttpGet()]
-        public async Task<IActionResult> GetAllProjects()
+        [HttpGet("companyId")]
+        public async Task<IActionResult> GetAllProjects(long companyId)
         {
-            var result = await _unitOfWork.ProjectRepository.GetAllProjectsAsync();
+            var result = await _unitOfWork.ProjectRepository.GetAllProjectsByComapnyIdAsync(companyId);
             if(result.Count < 0) return NotFound("Could not find any projects");
 
             var response = _mapper.Map<IList<ProjectViewModel>>(result);
